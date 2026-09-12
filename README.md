@@ -4,6 +4,10 @@ A RAG-based cryptocurrency knowledge chatbot that answers questions about crypto
 
 The application supports conversational text interaction and is designed to be extended with voice input/output using the same RAG backend.
 
+## Live Demo
+
+https://crypto-trading-assistant.streamlit.app/
+
 ## Features
 
 * Cryptocurrency knowledge chatbot
@@ -206,5 +210,4 @@ The retrieval pipeline was tested using representative cryptocurrency questions 
 * Out-of-domain questions
 * Price-related questions
 
-The chatbot is designed to avoid fabricating information when the retrieved knowledge base does not contain enough information.
 
