@@ -1,16 +1,33 @@
 import os
 
+import streamlit as st
 from dotenv import load_dotenv
 from groq import Groq
 
 
-# Load environment variables
-
+# Load local environment variables
 load_dotenv()
 
-# Groq client
 
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+# Get Groq API key
+api_key = os.getenv("GROQ_API_KEY")
+
+if not api_key:
+    try:
+        api_key = st.secrets["GROQ_API_KEY"]
+    except Exception:
+        api_key = None
+
+
+if not api_key:
+    raise RuntimeError(
+        "GROQ_API_KEY is not configured. "
+        "Add it to .env locally or Streamlit Secrets on Streamlit Cloud."
+    )
+
+
+# Groq client
+client = Groq(api_key=api_key)
 
 
 # System prompt
