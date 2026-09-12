@@ -1,0 +1,283 @@
+CRYPTO EXPERT BOT - KNOWLEDGE BASE
+Reference date: 2026-09-12
+Currency: INR (Indian Rupee)
+
+IMPORTANT:
+- Prices in this file are reference prices captured around 2026-09-12 and are NOT live prices.
+- Cryptocurrency prices change continuously.
+- The bot should use these values when the user asks for a price only if no live-price tool/API is available.
+- Never present a reference price as an exact live market price.
+- INR values can differ between exchanges because of liquidity, spread, fees, and INR conversion rates.
+
+==================================================
+1. BITCOIN (BTC)
+==================================================
+Name: Bitcoin
+Symbol: BTC
+Category: Layer-1 / Store-of-value cryptocurrency
+Blockchain: Bitcoin
+Purpose: Peer-to-peer digital money and decentralized monetary network.
+Key concept: Proof of Work (PoW)
+Supply: Maximum 21 million BTC
+Reference INR price: ₹7,799,289
+Common questions:
+- What is BTC?
+- What is Bitcoin used for?
+- What is the price of Bitcoin?
+- What is Bitcoin mining?
+- What is Bitcoin halving?
+
+==================================================
+2. ETHEREUM (ETH)
+==================================================
+Name: Ethereum
+Symbol: ETH
+Category: Layer-1 / Smart-contract platform
+Blockchain: Ethereum
+Purpose: Smart contracts, decentralized applications (dApps), DeFi, NFTs and token issuance.
+Consensus: Proof of Stake (PoS)
+Reference INR price: ₹255,702
+Common questions:
+- What is ETH?
+- What is Ethereum used for?
+- What is the price of Ethereum?
+- What are Ethereum gas fees?
+- What is staking?
+
+==================================================
+3. TETHER (USDT)
+==================================================
+Name: Tether
+Symbol: USDT
+Category: Stablecoin
+Blockchain: Multi-chain token
+Purpose: Designed to track the value of the US dollar and is widely used for trading and transfers.
+Reference INR price: ₹95.58
+Important: USDT is intended to maintain approximately a 1 USD value, but its INR price changes with the USD/INR exchange rate and market conditions.
+
+==================================================
+4. BINANCE COIN (BNB)
+==================================================
+Name: BNB
+Symbol: BNB
+Category: Layer-1 / Exchange ecosystem token
+Blockchain: BNB Chain
+Purpose: Used within the BNB Chain ecosystem and for transaction-fee discounts and other applications.
+Reference INR price: ₹70,069
+Consensus: Proof of Staked Authority (PoSA)
+
+==================================================
+5. XRP
+==================================================
+Name: XRP
+Symbol: XRP
+Category: Payment-focused cryptocurrency
+Network: XRP Ledger
+Purpose: Designed for fast, low-cost settlement and payments.
+Reference INR price: ₹130.60
+Key feature: XRP Ledger uses a consensus mechanism rather than Bitcoin-style mining.
+
+==================================================
+6. SOLANA (SOL)
+==================================================
+Name: Solana
+Symbol: SOL
+Category: Layer-1 blockchain
+Blockchain: Solana
+Purpose: High-throughput decentralized applications, DeFi, NFTs and payments.
+Consensus: Proof of Stake combined with Proof of History technology.
+Reference INR price: ₹10,292
+
+==================================================
+7. TRON (TRX)
+==================================================
+Name: TRON
+Symbol: TRX
+Category: Layer-1 blockchain
+Blockchain: TRON
+Purpose: Decentralized applications and digital-asset transfers.
+Reference INR price: ₹32.44
+Consensus: Delegated Proof of Stake-style architecture.
+
+==================================================
+8. HYPERLIQUID (HYPE)
+==================================================
+Name: Hyperliquid
+Symbol: HYPE
+Category: DeFi / decentralized trading ecosystem token
+Purpose: Associated with the Hyperliquid ecosystem and its decentralized trading infrastructure.
+Reference INR price: ₹7,554
+Note: Exact INR price can vary significantly between exchanges.
+
+==================================================
+9. ZCASH (ZEC)
+==================================================
+Name: Zcash
+Symbol: ZEC
+Category: Privacy-focused cryptocurrency
+Blockchain: Zcash
+Purpose: Digital payments with optional privacy features.
+Consensus: Proof of Work
+Reference INR price: ₹109,353
+
+==================================================
+10. DOGECOIN (DOGE)
+==================================================
+Name: Dogecoin
+Symbol: DOGE
+Category: Meme cryptocurrency / payment coin
+Blockchain: Dogecoin
+Purpose: Peer-to-peer digital currency originally created as a meme-inspired cryptocurrency.
+Consensus: Proof of Work
+Reference INR price: ₹7.98
+Note: DOGE price is highly market-sensitive and can move rapidly.
+
+==================================================
+11. CARDANO (ADA)
+==================================================
+Name: Cardano
+Symbol: ADA
+Category: Layer-1 smart-contract blockchain
+Blockchain: Cardano
+Purpose: Smart contracts, decentralized applications and digital assets.
+Consensus: Proof of Stake
+Reference INR price: ₹19.95
+Note: Reference INR value is approximate and derived from the market price around the reference date.
+
+==================================================
+12. CHAINLINK (LINK)
+==================================================
+Name: Chainlink
+Symbol: LINK
+Category: Oracle network token
+Network: Chainlink
+Purpose: Connects blockchain smart contracts with external data and real-world information.
+Reference INR price: ₹1,025
+Key concept: Blockchain oracle infrastructure.
+
+==================================================
+13. AVALANCHE (AVAX)
+==================================================
+Name: Avalanche
+Symbol: AVAX
+Category: Layer-1 blockchain
+Blockchain: Avalanche
+Purpose: Smart contracts, decentralized applications and custom blockchain networks.
+Consensus: Proof of Stake family
+Reference INR price: ₹662
+
+==================================================
+14. POLKADOT (DOT)
+==================================================
+Name: Polkadot
+Symbol: DOT
+Category: Layer-0 / interoperability protocol
+Blockchain: Polkadot
+Purpose: Blockchain interoperability and application-specific chains.
+Consensus: Nominated Proof of Stake
+Reference INR price: ₹93
+Key concept: Relay Chain and connected parachains.
+
+==================================================
+15. LITECOIN (LTC)
+==================================================
+Name: Litecoin
+Symbol: LTC
+Category: Payment cryptocurrency
+Blockchain: Litecoin
+Purpose: Peer-to-peer digital payments.
+Consensus: Proof of Work
+Reference INR price: ₹4,800
+
+==================================================
+PRICE RESPONSE RULE
+==================================================
+If the user asks:
+"What is the price of Bitcoin?"
+"BTC price?"
+"How much is Ethereum?"
+"ETH in INR?"
+
+Use the matching coin record.
+
+Example response when using this static knowledge:
+"Bitcoin (BTC) reference price: approximately ₹7,799,289 per BTC.
+This is a reference value from 2026-09-12, not a live market quote. Crypto prices change continuously."
+
+If a live price API/tool is connected:
+- Prefer the live price over this file.
+- Mention the source/time when appropriate.
+
+==================================================
+COIN NAME MATCHING
+==================================================
+Bitcoin = BTC
+Ethereum = ETH
+Tether = USDT
+Binance Coin = BNB
+BNB = BNB
+XRP = XRP
+Ripple = XRP (clarify that XRP is the token; Ripple is the company)
+Solana = SOL
+TRON = TRX
+Hyperliquid = HYPE
+Zcash = ZEC
+Dogecoin = DOGE
+Doge = DOGE
+Cardano = ADA
+Chainlink = LINK
+Avalanche = AVAX
+Polkadot = DOT
+Litecoin = LTC
+
+==================================================
+GENERAL CRYPTO KNOWLEDGE
+==================================================
+Cryptocurrency:
+A digital asset that uses cryptographic techniques and blockchain or distributed-ledger technology.
+
+Blockchain:
+A distributed digital ledger maintained by a network of computers.
+
+Coin vs Token:
+A coin normally operates on its own native blockchain. A token is generally issued on an existing blockchain.
+
+Market Cap:
+Market capitalization is approximately price × circulating supply.
+
+Liquidity:
+How easily an asset can be bought or sold without causing a large price impact.
+
+Volatility:
+The degree to which an asset's price changes over time. Crypto can be highly volatile.
+
+Stablecoin:
+A crypto asset designed to maintain a relatively stable value against another asset, commonly the US dollar.
+
+DeFi:
+Decentralized finance applications that provide financial functions using blockchain-based protocols and smart contracts.
+
+Smart Contract:
+A program deployed on a blockchain that automatically executes predefined logic.
+
+Wallet:
+Software or hardware used to manage cryptographic keys and interact with blockchain networks.
+
+Public Key / Address:
+Information used to receive blockchain assets.
+
+Private Key:
+Secret cryptographic information that controls access to assets. Never share it.
+
+Seed Phrase:
+A secret recovery phrase used to restore a crypto wallet. Never share it with anyone.
+
+==================================================
+SAFETY / FINANCIAL RESPONSE RULE
+==================================================
+This knowledge base is educational.
+Do not guarantee profits.
+Do not claim that any coin will definitely rise or fall.
+Do not provide personalized financial advice as if you are a licensed financial adviser.
+For investment decisions, explain risks and encourage independent research.
+Never ask users to provide private keys, seed phrases, passwords, OTPs or exchange credentials.
