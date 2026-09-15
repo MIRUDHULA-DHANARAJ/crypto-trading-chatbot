@@ -29,8 +29,6 @@ https://crypto-trading-assistant.streamlit.app/
 User
  │
  ├── Text Input
- │
- └── Voice Input
        │
        ▼
    Question
@@ -45,8 +43,6 @@ User
        LLM
        │
        ├── Text Answer
-       │
-       └── TTS → Voice Output
 ```
 
 ### RAG Pipeline
