@@ -206,4 +206,21 @@ The retrieval pipeline was tested using representative cryptocurrency questions 
 * Out-of-domain questions
 * Price-related questions
 
+## Retrieval Evaluation
+
+The retrieval pipeline was evaluated using 20 test questions covering Bitcoin, Ethereum, trading, technical analysis, risk management, and knowledge-base data.
+
+The evaluation included 18 in-domain questions and 2 out-of-domain questions.
+
+| Metric   | Result |
+| -------- | -----: |
+| Recall@1 |  72.2% |
+| Recall@3 |   100% |
+| MRR      |  0.861 |
+
+The correct source appeared within the Top-3 retrieved results for all 18 in-domain questions. The lower Recall@1 primarily came from semantically related documents being ranked ahead of the expected source, while the relevant source was still retrieved at rank 2.
+
+Two negative tests were also included to verify behavior for out-of-domain and prediction-related queries.
+
+
 
