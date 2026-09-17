@@ -2,7 +2,7 @@
 
 A RAG-based cryptocurrency knowledge chatbot that answers questions about crypto, trading, technical analysis, and risk management using a curated knowledge base.
 
-The application supports conversational text interaction and is designed to be extended with voice input/output using the same RAG backend.
+The application supports conversational text interaction using the  RAG backend.
 
 ## Live Demo
 
