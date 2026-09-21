@@ -1,7 +1,9 @@
+import tempfile
 from pathlib import Path
 
 from langchain_community.document_loaders import (
     DirectoryLoader,
+    PyPDFLoader,
     TextLoader,
 )
 
@@ -28,5 +30,16 @@ def load_documents():
 
     documents.extend(md_loader.load())
     documents.extend(txt_loader.load())
+
+    return documents
+
+
+def load_pdf(uploaded_file):
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
+        tmp.write(uploaded_file.read())
+        tmp_path = tmp.name
+
+    loader = PyPDFLoader(tmp_path)
+    documents = loader.load()
 
     return documents

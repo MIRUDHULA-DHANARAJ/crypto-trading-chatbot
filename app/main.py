@@ -12,17 +12,17 @@ if str(PROJECT_ROOT) not in sys.path:
 
 # Project imports
 
-from src.loader import load_documents
+from src.loader import load_documents, load_pdf
 from src.chunker import chunk_documents
 from src.embedder import embed_documents
 from src.vector_db import create_vector_index
-from src.retriever import retrieve_context
+from src.retriever import retrieve_context, build_bm25_index
 from src.generator import generate_answer
 
 
 # Page configuration
 
-st.set_page_config(page_title="Crypto Trading Assistant",page_icon="₿",layout="centered",)
+st.set_page_config(page_title="Crypto Trading Assistant", page_icon="₿", layout="centered")
 
 
 # Build knowledge base
@@ -38,8 +38,9 @@ def build_knowledge_base():
 
     index = create_vector_index(embeddings)
 
-    return index, chunks
+    bm25 = build_bm25_index(chunks)
 
+    return index, bm25, chunks
 
 
 # Header
@@ -55,7 +56,37 @@ st.info("Educational use only. This assistant does not provide ""personalized fi
 
 with st.spinner("Loading crypto knowledge base..."):
 
-    index, chunks = build_knowledge_base()
+    index, bm25, chunks = build_knowledge_base()
+
+
+# Live PDF updater
+
+uploaded_pdf = st.file_uploader("Add a PDF to the knowledge base", type="pdf")
+
+if "loaded_pdfs" not in st.session_state:
+
+    st.session_state.loaded_pdfs = set()
+
+
+if uploaded_pdf is not None and uploaded_pdf.name not in st.session_state.loaded_pdfs:
+
+    with st.spinner(f"Processing {uploaded_pdf.name}..."):
+
+        new_documents = load_pdf(uploaded_pdf)
+
+        new_chunks = chunk_documents(new_documents)
+
+        new_embeddings = embed_documents(new_chunks)
+
+        index.add(new_embeddings.astype("float32"))
+
+        chunks.extend(new_chunks)
+
+        bm25 = build_bm25_index(chunks)
+
+    st.session_state.loaded_pdfs.add(uploaded_pdf.name)
+
+    st.success(f"{uploaded_pdf.name} added — you can ask about it now.")
 
 
 # Chat history
@@ -96,17 +127,20 @@ if query:
 
 
     # Generate assistant response
-    
 
     with st.chat_message("assistant"):
 
         with st.spinner("Searching knowledge base..."):
 
             # Retrieve relevant chunks
-            results = retrieve_context(index=index,query=query,chunks=chunks,top_k=3,)
+            results = retrieve_context(index=index, bm25=bm25, query=query, chunks=chunks, top_k=3)
 
-            # Generate grounded answer
-            answer = generate_answer(query=query,retrieved_results=results,)
+            # Generate grounded answer, using recent conversation as context
+            answer = generate_answer(
+                query=query,
+                retrieved_results=results,
+                chat_history=st.session_state.messages[:-1],
+            )
 
 
         # Display answer
@@ -124,7 +158,7 @@ if query:
 
                 document = result["document"]
 
-                source = document.metadata.get("source","Unknown source",)
+                source = document.metadata.get("source", "Unknown source")
 
                 # Works with both Windows and Unix paths
                 source_name = (source.replace("\\", "/").split("/")[-1])

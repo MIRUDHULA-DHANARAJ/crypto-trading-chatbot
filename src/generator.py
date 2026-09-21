@@ -60,6 +60,20 @@ knowledge base to answer that."
 Do not invent facts.
 
 
+CONVERSATION HISTORY
+---------------------
+
+You may also receive recent turns of the conversation.
+
+Use this history only to resolve references such as "it",
+"that coin", or follow-up questions like "what about ETH
+instead".
+
+Do not treat earlier conversation turns as a source of
+factual knowledge. The knowledge context above is always
+the source of truth for facts.
+
+
 COIN IDENTIFICATION
 -------------------
 
@@ -282,7 +296,7 @@ Accuracy is more important than sounding confident.
 # Generate answer
 # ---------------------------------------------------------
 
-def generate_answer(query, retrieved_results):
+def generate_answer(query, retrieved_results, chat_history=None, history_turns=3):
 
     context = "\n\n".join(
         result["document"].page_content
@@ -315,18 +329,28 @@ information, clearly say that the information is not
 available in the current knowledge base.
 """
 
+    messages = [
+        {
+            "role": "system",
+            "content": SYSTEM_PROMPT,
+        },
+    ]
+
+    if chat_history:
+        # only keep the last few turns so the prompt doesn't grow unbounded
+        recent_history = chat_history[-(history_turns * 2):]
+        messages.extend(recent_history)
+
+    messages.append(
+        {
+            "role": "user",
+            "content": user_prompt,
+        }
+    )
+
     response = client.chat.completions.create(
         model="openai/gpt-oss-120b",
-        messages=[
-            {
-                "role": "system",
-                "content": SYSTEM_PROMPT,
-            },
-            {
-                "role": "user",
-                "content": user_prompt,
-            },
-        ],
+        messages=messages,
         temperature=0.2,
     )
 
