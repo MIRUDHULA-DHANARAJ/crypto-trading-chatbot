@@ -1,6 +1,6 @@
-# ₿ Crypto Trading Knowledge Assistant
+# RAG Knowledge Assistant
 
-A RAG-based cryptocurrency knowledge chatbot that answers questions about crypto, trading, technical analysis, and risk management using a curated knowledge base.
+A general-purpose Retrieval-Augmented Generation (RAG) chatbot. Point it at any set of documents — technical docs, notes, manuals, research, whatever — and it answers questions grounded in that content. Not tied to any single domain.
 
 The application supports conversational text interaction and is designed to be extended with voice input/output using the same RAG backend.
 
@@ -8,17 +8,18 @@ The application supports conversational text interaction and is designed to be e
 
 https://crypto-trading-assistant.streamlit.app/
 
+*(demo instance currently loaded with a sample knowledge base — swap `data/raw/` for your own documents to repurpose it)*
+
 ## Features
 
-* Cryptocurrency knowledge chatbot
-* Retrieval-Augmented Generation (RAG)
-* FAISS vector search
-* Sentence Transformers embeddings
-* Grounded answers using a curated knowledge base
-* Source display for retrieved documents
-* Handles out-of-domain questions without fabricating answers
-* Distinguishes static reference prices from live market prices
-* Educational and risk-aware responses
+* Retrieval-Augmented Generation (RAG) over any document set you provide
+* **Hybrid search** — semantic (FAISS + Sentence Transformers) + keyword (BM25) retrieval combined
+* **Cross-encoder reranking** — reranks retrieved chunks for relevance before generation
+* **Conversation memory** — recent chat turns are passed to the model so follow-ups work naturally
+* **Live PDF updates** — upload a PDF from the app; it's chunked, embedded, and added to the knowledge base instantly, no restart needed
+* Source display for every retrieved document
+* Grounded answers — handles out-of-domain questions without fabricating facts
+* Distinguishes static/reference information from current/live information, where relevant
 * Streamlit web interface
 * Groq-powered LLM generation
 * Designed for future voice input/output
@@ -28,27 +29,30 @@ https://crypto-trading-assistant.streamlit.app/
 ```text
 User
  │
- ├── Text Input
+ ├── Text Input / PDF Upload
        │
        ▼
    Question
        │
        ▼
-  FAISS Retrieval
+  Hybrid Retrieval (FAISS + BM25)
        │
        ▼
-   Top-K Context
+   Cross-Encoder Rerank
+       │
+       ▼
+   Top-K Context + Conversation History
        │
        ▼
        LLM
        │
-       ├── Text Answer
+       ├── Grounded Answer + Sources
 ```
 
 ### RAG Pipeline
 
 ```text
-Knowledge Documents
+Knowledge Documents (.md, .txt, or uploaded PDF)
         │
         ▼
    Document Loading
@@ -60,10 +64,10 @@ Knowledge Documents
     Embeddings
         │
         ▼
-      FAISS
+   FAISS + BM25 Index
         │
         ▼
-   Top-K Retrieval
+  Hybrid Retrieval + Rerank
         │
         ▼
     LLM Generation
@@ -77,45 +81,29 @@ Knowledge Documents
 * **Python**
 * **Streamlit** — web application
 * **LangChain** — document loading and text splitting
-* **Sentence Transformers** — text embeddings
+* **Sentence Transformers** — text embeddings + cross-encoder reranking
 * **FAISS** — vector similarity search
+* **rank_bm25** — keyword search
 * **Groq** — LLM inference
 * **python-dotenv** — local environment configuration
 
 ## Knowledge Base
 
-The chatbot currently contains curated information covering:
+The assistant works with whatever documents you provide — there's no fixed subject matter. Drop `.md` / `.txt` files into `data/raw/`, or upload PDFs live through the running app.
 
-* Bitcoin
-* Ethereum
-* Cryptocurrency fundamentals
-* Trading concepts
-* Technical analysis
-* RSI and other indicators
-* Risk management
-* Leverage and liquidation
-* Position sizing
-* Risk-reward concepts
-* Reference cryptocurrency prices
-
-The reference price data is static and is explicitly identified as such. The application does not claim to provide live market prices.
+The system prompt (in `src/generator.py`) can be adjusted per use case — e.g. instructing the model on how to handle domain-specific questions, cite sources, or distinguish reference vs. current information — but the retrieval pipeline itself makes no assumptions about the content's subject.
 
 ## Project Structure
 
 ```text
-crypto-trading-chatbot/
+rag-knowledge-assistant/
 │
 ├── app/
 │   └── main.py
 │
 ├── data/
 │   └── raw/
-│       ├── bitcoin_basics.md
-│       ├── ethereum_basics.md
-│       ├── trading_basics.md
-│       ├── technical_analysis.md
-│       ├── risk_management.md
-│       └── crypto_knowledge_base.txt
+│       └── (your own .md / .txt source documents)
 │
 ├── src/
 │   ├── chunker.py
@@ -176,7 +164,11 @@ GROQ_API_KEY=your_groq_api_key
 
 The `.env` file is excluded from Git using `.gitignore`.
 
-### 5. Run the application
+### 5. Add your knowledge base
+
+Drop `.md` / `.txt` files into `data/raw/`, or upload PDFs directly from the running app.
+
+### 6. Run the application
 
 ```bash
 streamlit run app/main.py
@@ -196,21 +188,7 @@ The API key should never be committed to the repository.
 
 ## Evaluation
 
-The retrieval pipeline was tested using representative cryptocurrency questions covering:
-
-* Bitcoin fundamentals
-* Ethereum fundamentals
-* Trading concepts
-* Technical analysis
-* Risk management
-* Out-of-domain questions
-* Price-related questions
-
-## Retrieval Evaluation
-
-The retrieval pipeline was evaluated using 20 test questions covering Bitcoin, Ethereum, trading, technical analysis, risk management, and knowledge-base data.
-
-The evaluation included 18 in-domain questions and 2 out-of-domain questions.
+The retrieval pipeline was evaluated using 20 test questions against the sample knowledge base (18 in-domain, 2 out-of-domain):
 
 | Metric   | Result |
 | -------- | -----: |
@@ -218,9 +196,4 @@ The evaluation included 18 in-domain questions and 2 out-of-domain questions.
 | Recall@3 |   100% |
 | MRR      |  0.861 |
 
-The correct source appeared within the Top-3 retrieved results for all 18 in-domain questions. The lower Recall@1 primarily came from semantically related documents being ranked ahead of the expected source, while the relevant source was still retrieved at rank 2.
-
-Two negative tests were also included to verify behavior for out-of-domain and prediction-related queries.
-
-
-
+The correct source appeared within the top 3 retrieved results for all 18 in-domain questions. Lower Recall@1 mainly came from semantically related documents outranking the expected source, with the relevant source still retrieved at rank 2. Two negative tests confirmed the system doesn't fabricate answers for out-of-domain or prediction-style queries.
